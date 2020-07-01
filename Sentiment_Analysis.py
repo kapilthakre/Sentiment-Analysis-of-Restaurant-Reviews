@@ -1,5 +1,6 @@
-import pandas as pd
+# Importing libraries
 import numpy as np
+import pandas as pd
 import pickle
 import nltk
 import re
@@ -12,7 +13,7 @@ st.title("Restaurant Review's Sentiment Analyser")
 st.markdown("*A Machine Learning Web App, Built with Streamlit, Deployed using Heroku*")
 st.write("")
 
-#Taking input from user
+# Taking input from user
 sample_message = st.text_area('Enter your review here...',height=250)
 
 # Load the Naive bayes model and CountVectorizer object from disk
