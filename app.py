@@ -4,6 +4,7 @@ import pickle
 import nltk
 import re
 from nltk.corpus import stopwords
+nltk.download('stopwords')
 from nltk.stem.porter import PorterStemmer
 import streamlit as st
 
