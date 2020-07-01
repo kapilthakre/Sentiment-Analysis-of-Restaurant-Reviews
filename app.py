@@ -6,7 +6,7 @@ import pandas as pd
 import streamlit as st
 
 def main():
-    st.title("Bank Authenticator")
+    st.title("Sentiment")
 
 
 if __name__=='__main__':
