@@ -4,7 +4,6 @@ import numpy as np
 import pickle
 import nltk
 import re
-nltk.download('stopwords')
 from nltk.corpus import stopwords
 from nltk.stem.porter import PorterStemmer
 
