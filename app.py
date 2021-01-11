@@ -4,8 +4,6 @@ import pandas as pd
 import pickle
 import nltk
 import re
-nltk.download('stopwords')
-from nltk.corpus import stopwords
 from nltk.stem.porter import PorterStemmer
 import streamlit as st
 
@@ -17,8 +15,25 @@ st.write("")
 sample_message = st.text_area('Enter your review here...',height=250)
 
 # Load the Naive bayes model and CountVectorizer object from disk
-model = pickle.load(open('Sentiment_Prediction_model.pkl', 'rb'))
-cv = pickle.load(open('cv-transform.pkl','rb'))
+model = pickle.load(open('Sentiment_Prediction_modelv2', 'rb'))
+vectorizer = pickle.load(open('tfidf-transform','rb'))
+
+# we are removing the words from the stop words list: 'no', 'nor', 'not',isn't,"doesn't", "won't"
+stopwords= set(['br', 'the', 'i', 'me', 'my', 'myself', 'we', 'our', 'ours', 'ourselves', 'you', "you're", "you've",\
+            "you'll", "you'd", 'your', 'yours', 'yourself', 'yourselves', 'he', 'him', 'his', 'himself', \
+            'she', "she's", 'her', 'hers', 'herself', 'it', "it's", 'its', 'itself', 'they', 'them', 'their',\
+            'theirs', 'themselves', 'what', 'which', 'who', 'whom', 'this', 'that', "that'll", 'these', 'those', \
+            'am', 'is', 'are', 'was', 'were', 'be', 'been', 'being', 'have', 'has', 'had', 'having', 'do', 'does', \
+            'did', 'doing', 'a', 'an', 'the', 'and', 'but', 'if', 'or', 'because', 'as', 'until', 'while', 'of', \
+            'at', 'by', 'for', 'with', 'about', 'against', 'between', 'into', 'through', 'during', 'before', 'after',\
+            'above', 'below', 'to', 'from', 'up', 'down', 'in', 'out', 'on', 'off', 'over', 'under', 'again', 'further',\
+            'then', 'once', 'here', 'there', 'when', 'where', 'why', 'how', 'all', 'any', 'both', 'each', 'few', 'more',\
+            'most', 'other', 'some', 'such', 'only', 'own', 'same', 'so', 'than', 'too', 'very', \
+            's', 't', 'can', 'will', 'just', 'don', 'should', "should've", 'now', 'd', 'll', 'm', 'o', 're', \
+            've', 'y', 'ain', 'aren', "aren't", 'couldn', "couldn't", 'didn', "didn't", 'doesn','hadn',\
+            "hadn't", 'hasn', "hasn't", 'haven', "haven't", 'isn','ma', 'mightn', "mightn't", 'mustn',\
+            "mustn't", 'needn', "needn't", 'shan', "shan't", 'shouldn', "shouldn't", 'wasn', "wasn't", 'weren', "weren't", \
+            'won','wouldn', "wouldn't"])
 
 #Predictin function
 def predict_sentiment(sample_review):
@@ -26,9 +41,9 @@ def predict_sentiment(sample_review):
     sample_review = sample_review.lower()
     sample_review = sample_review.split()
     ps = PorterStemmer()
-    sample_review = [ps.stem(word) for word in sample_review if word not in set(stopwords.words('english'))]
+    sample_review = [ps.stem(word) for word in sample_review if word not in stopwords]
     sample_review = ' '.join(sample_review)
-    temp = cv.transform([sample_review]).toarray()
+    temp = vectorizer.transform([sample_review]).toarray()
     return model.predict(temp)[0]
 
 # Submit button
