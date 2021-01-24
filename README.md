@@ -1,4 +1,4 @@
-# Sentiment Analysis of Resturant Reviews With Deployment
+# Sentiment Analysis of Restaurant Reviews With Deployment
 
 ![Python](https://img.shields.io/badge/Python-3.7-blue)
 ![Notebook](https://img.shields.io/badge/Notebook-Jupyter-orange)
